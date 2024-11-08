@@ -28,7 +28,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<true/>
+			<false/>
 			<key>defaults</key>
 			<string>com.82flex.singlevpnprefs</string>
 			<key>key</key>
