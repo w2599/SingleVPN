@@ -19,6 +19,7 @@ include $(THEOS_MAKE_PATH)/aggregate.mk
 TWEAK_NAME := SingleVPN
 
 SingleVPN_FILES += SingleVPN.x
+SingleVPN_FILES += UIColor+.m
 SingleVPN_CFLAGS += -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/tweak.mk

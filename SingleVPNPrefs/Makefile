@@ -14,6 +14,7 @@ BUNDLE_NAME := SingleVPNPrefs
 
 SingleVPNPrefs_FILES += SingleVPNRootListController.m
 SingleVPNPrefs_FILES += SingleVPNColorCell.m
+SingleVPNPrefs_FILES += ../UIColor+.m
 SingleVPNPrefs_CFLAGS += -fobjc-arc
 
 ifeq ($(THEOS_DEVICE_SIMULATOR),1)

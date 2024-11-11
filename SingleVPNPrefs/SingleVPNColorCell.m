@@ -1,6 +1,7 @@
 #import <Preferences/PSSpecifier.h>
 #import <UIKit/UIKit.h>
 
+#import "../UIColor+.h"
 #import "SingleVPNColorCell.h"
 
 @interface PSTableCell (Private)
@@ -20,7 +21,7 @@
     if (self) {
         _colorWell = [[UIColorWell alloc] initWithFrame:CGRectZero];
 
-        [_colorWell setSupportsAlpha:NO];
+        [_colorWell setSupportsAlpha:YES];
         [_colorWell addTarget:self action:@selector(colorChanged:) forControlEvents:UIControlEventValueChanged];
 
         [self addSubview:_colorWell];
@@ -35,15 +36,7 @@
 }
 
 - (void)colorChanged:(UIColorWell *)sender {
-    UIColor *color = sender.selectedColor;
-
-    CGFloat red, green, blue;
-    [color getRed:&red green:&green blue:&blue alpha:NULL];
-
-    unsigned int hexValue = ((int)(red * 255) << 16) + ((int)(green * 255) << 8) + (int)(blue * 255);
-    NSString *hexString = [NSString stringWithFormat:@"#%06X", hexValue];
-
-    [self.specifier performSetterWithValue:hexString];
+    [self.specifier performSetterWithValue:[sender.selectedColor svpn_externalRepresentation]];
 }
 
 - (void)setValue:(id)value {
@@ -54,22 +47,7 @@
         return;
     }
 
-    NSScanner *scanner = [NSScanner scannerWithString:hexString];
-    if ([hexString hasPrefix:@"#"]) {
-        [scanner setScanLocation:1];
-    }
-
-    unsigned int hexValue;
-    if (![scanner scanHexInt:&hexValue]) {
-        return;
-    }
-
-    CGFloat red = ((hexValue & 0xFF0000) >> 16) / 255.0;
-    CGFloat green = ((hexValue & 0x00FF00) >> 8) / 255.0;
-    CGFloat blue = (hexValue & 0x0000FF) / 255.0;
-    UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1];
-
-    [_colorWell setSelectedColor:color];
+    [_colorWell setSelectedColor:[UIColor svpn_colorWithExternalRepresentation:hexString]];
 }
 
 @end
