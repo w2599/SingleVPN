@@ -44,6 +44,7 @@
 @interface _UIStatusBarStyleAttributes : NSObject
 @property(nonatomic, readonly) long long style;
 @property(nonatomic, copy) UIColor *textColor;
+@property(nonatomic, copy) UIColor *imageTintColor;
 @end
 
 @interface _UIStatusBarItemUpdate : NSObject
@@ -57,8 +58,7 @@
 @end
 
 @interface _UIStatusBarWifiItem : _UIStatusBarItem
-@property(nonatomic, strong) NSNumber *smIsVPNEnabled;
-@property(nonatomic, strong) NSNumber *smDisplayValue;
+@property(nonatomic, strong) _UIStatusBarImageView *networkIconView;
 - (UIColor *)_fillColorForUpdate:(_UIStatusBarItemUpdate *)update entry:(_UIStatusBarDataWifiEntry *)entry;
 @end
 

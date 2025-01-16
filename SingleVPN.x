@@ -43,29 +43,27 @@ static void ReloadPrefs() {
 
 %hook _UIStatusBarWifiItem
 
-%property (nonatomic, strong) NSNumber *smIsVPNEnabled;
-%property (nonatomic, strong) NSNumber *smDisplayValue;
-
 - (id)applyUpdate:(_UIStatusBarItemUpdate *)update toDisplayItem:(_UIStatusBarDisplayItem *)displayItem {
     _isVPNEnabled = update.data.vpnEntry.enabled;
-    long long displayValue = update.data.wifiEntry.displayValue;
 
     id result = %orig;
-    BOOL needsReload = NO;
 
-    if ([self.smIsVPNEnabled boolValue] != _isVPNEnabled) {
-        self.smIsVPNEnabled = @(_isVPNEnabled);
-        needsReload = YES;
+    UIColor *originalColor = update.styleAttributes.textColor;
+    UIColor *newColor = nil;
+
+    BOOL decision = _isEnabledReversed ? !_isVPNEnabled : _isVPNEnabled;
+    if (decision) {
+        newColor = svpnColorWithTextColor(originalColor);
     }
 
-    if ([self.smDisplayValue longLongValue] != displayValue) {
-        self.smDisplayValue = @(displayValue);
-        needsReload = YES;
-    }
+    if (!newColor) { newColor = update.styleAttributes.imageTintColor ?: originalColor; }
 
-    if (needsReload) {
-        for (_UIStatusBarDisplayItem *item in self.displayItems.allValues) {
-            %orig(update, item);
+    for (_UIStatusBarDisplayItem *item in self.displayItems.allValues) {
+        %orig(update, item);
+
+        if (item.view == self.networkIconView && [item.view isKindOfClass:%c(_UIStatusBarImageView)]) {
+            _UIStatusBarImageView *imageView = (_UIStatusBarImageView *)item.view;
+            [imageView setTintColor:newColor];
         }
     }
 
