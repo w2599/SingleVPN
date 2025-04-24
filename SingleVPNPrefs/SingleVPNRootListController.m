@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-#include <Foundation/NSArray.h>
 #import <Preferences/PSSpecifier.h>
 #import <stdlib.h>
 #import <sys/sysctl.h>
