@@ -34,6 +34,20 @@
 			<key>defaults</key>
 			<string>com.82flex.singlevpnprefs</string>
 			<key>key</key>
+			<string>IsDisableAnimation</string>
+			<key>label</key>
+			<string>Disable Animation</string>
+			<key>PostNotification</key>
+			<string>com.82flex.singlevpnprefs/saved</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.82flex.singlevpnprefs</string>
+			<key>key</key>
 			<string>IsEnabledReversed</string>
 			<key>label</key>
 			<string>Reverse Indicator</string>
