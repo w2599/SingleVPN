@@ -68,3 +68,13 @@
 @interface _UIStatusBarDisplayItem : NSObject
 @property(nonatomic, readonly) UIView *view;
 @end
+
+@interface VPNConnection
+@property (readonly) unsigned long long status;
+@end
+
+@interface VPNConnectionStore
++(id)sharedInstance;
+-(unsigned long long)currentOnlyConnectionGrade;
+-(VPNConnection *)currentConnectionWithGrade:(unsigned long long)arg1;
+@end
